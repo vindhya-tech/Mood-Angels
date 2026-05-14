@@ -307,22 +307,30 @@ export default function PsychopathyTest() {
                   <p style={styles.resultScore}>Your Score: {result.scorePercent} / 100</p>
                 )}
                 {/* <p style={styles.resultText}>{result.level}</p> */}
-{/* 
+
                 {result.AngelRDiagnosis && (
-                  <p style={{ marginTop: 10 }}><strong>Angel R Diagnosis:</strong> {result.AngelRDiagnosis}</p>
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#e74c3c" }}>🧠 Angel R (Researcher) - Diagnosis:</strong> {result.AngelRDiagnosis}
+                  </div>
                 )}
 
                 {result.AngelDExplanation && (
-                  <p style={{ marginTop: 10 }}><strong>Angel D Summary:</strong> {result.AngelDExplanation}</p>
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#3498db" }}>📚 Angel D (Diagnostician) - Summary:</strong> {result.AngelDExplanation}
+                  </div>
                 )}
 
                 {result.AngelCComparison && (
-                  <p style={{ marginTop: 10 }}><strong>Angel C Comparative Summary:</strong> {result.AngelCComparison}</p>
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#9b59b6" }}>⚖️ Angel C (Comparator) - Analysis:</strong> {result.AngelCComparison}
+                  </div>
                 )}
 
                 {result.AngelEDebate && (
-                  <p style={{ marginTop: 10 }}><strong>Angel E Debate Summary:</strong> {result.AngelEDebate}</p>
-                )} */}
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#f39c12" }}>🎭 Angel E (Evaluator) - Debate:</strong> {result.AngelEDebate}
+                  </div>
+                )}
 
                 {result.AngelJDecision && (
                   <div style={{ marginTop: "12px", textAlign: "left", color: "#444" }}>

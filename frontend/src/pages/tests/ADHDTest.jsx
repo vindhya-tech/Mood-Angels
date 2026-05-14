@@ -303,29 +303,29 @@ export default function ADHDTest() {
                 {result.score !== null && <p style={styles.resultScore}>Your ADHD Score: {result.score}/100</p>}
                 {/* <p style={styles.resultText}>{result.level}</p> */}
 
-                {/* {result.aiDiagnosis && (
-                  <p style={styles.agentRText}>
-                    <strong>Agent R Diagnosis:</strong> {result.aiDiagnosis}
-                  </p>
+                {result.aiDiagnosis && (
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#e74c3c" }}>🧠 Agent R (Researcher) - Diagnosis:</strong> {result.aiDiagnosis}
+                  </div>
                 )}
 
                 {result.agentDExplanation && (
-                  <p style={{ marginTop: "10px", fontSize: "16px", color: "#444", lineHeight: "1.6" }}>
-                    <strong>Agent D Summary:</strong> {result.agentDExplanation}
-                  </p>
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#3498db" }}>📚 Agent D (Diagnostician) - Summary:</strong> {result.agentDExplanation}
+                  </div>
                 )}
 
                 {result.agentCComparison && (
-                  <p style={{ marginTop: "10px", fontSize: "16px", color: "#444", lineHeight: "1.6" }}>
-                    <strong>Agent C Comparative Summary:</strong> {result.agentCComparison}
-                  </p>
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#9b59b6" }}>⚖️ Agent C (Comparator) - Analysis:</strong> {result.agentCComparison}
+                  </div>
                 )}
 
                 {result.agentEDebate && (
-                  <p style={{ marginTop: "10px", fontSize: "16px", color: "#444", lineHeight: "1.6" }}>
-                    <strong>Agent E Debate Summary:</strong> {result.agentEDebate}
-                  </p>
-                )} */}
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#f39c12" }}>🎭 Agent E (Evaluator) - Debate:</strong> {result.agentEDebate}
+                  </div>
+                )}
 
                 {/* Agent J output render */}
                 {result.agentJDecision && (

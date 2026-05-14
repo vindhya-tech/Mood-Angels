@@ -301,29 +301,29 @@ export default function EmotionalIntelligenceTest() {
                 {result.score !== null && <p style={styles.resultScore}>Your EQ Score: {result.score}/100</p>}
                 {/* <p style={styles.resultText}>{result.level}</p> */}
 
-                {/* {result.aiDiagnosis && (
-                  <p style={styles.agentRText}>
-                    <strong>Angel R Diagnosis:</strong> {result.aiDiagnosis}
-                  </p>
+                {result.aiDiagnosis && (
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#e74c3c" }}>🧠 Angel R (Researcher) - Diagnosis:</strong> {result.aiDiagnosis}
+                  </div>
                 )}
 
                 {result.agentDExplanation && (
-                  <p style={{ marginTop: 10, fontSize: 16 }}>
-                    <strong>Angel D Summary:</strong> {result.agentDExplanation}
-                  </p>
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#3498db" }}>📚 Angel D (Diagnostician) - Summary:</strong> {result.agentDExplanation}
+                  </div>
                 )}
 
                 {result.agentCComparison && (
-                  <p style={{ marginTop: 10, fontSize: 16 }}>
-                    <strong>Angel C Comparative Summary:</strong> {result.agentCComparison}
-                  </p>
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#9b59b6" }}>⚖️ Angel C (Comparator) - Analysis:</strong> {result.agentCComparison}
+                  </div>
                 )}
 
                 {result.agentEDebate && (
-                  <p style={{ marginTop: 10, fontSize: 16 }}>
-                    <strong>Angel E Debate Summary:</strong> {result.agentEDebate}
-                  </p>
-                )} */}
+                  <div style={{ marginTop: 10, fontSize: 16, color: "#444", textAlign: "left", padding: "10px", backgroundColor: "white", borderRadius: "8px", marginBottom: 10 }}>
+                    <strong style={{ color: "#f39c12" }}>🎭 Angel E (Evaluator) - Debate:</strong> {result.agentEDebate}
+                  </div>
+                )}
 
                 {result.agentJDecision && (
                   <div style={{ marginTop: "12px", textAlign: "left", color: "#444" }}>
