@@ -7,6 +7,7 @@ function UserWrapper({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [username, setUsername] = useState(
     localStorage.getItem("firstName") ||
+      localStorage.getItem("userName") ||
       localStorage.getItem("fullName") ||
       localStorage.getItem("email")?.split("@")[0] ||
       "User"
@@ -21,6 +22,7 @@ function UserWrapper({ children }) {
     const syncData = () => {
       const updatedName =
         localStorage.getItem("firstName") ||
+        localStorage.getItem("userName") ||
         localStorage.getItem("fullName") ||
         localStorage.getItem("email")?.split("@")[0] ||
         "User";
@@ -205,9 +207,9 @@ function UserWrapper({ children }) {
         <aside className={`sidebar ${sidebarOpen ? "" : "closed"}`}>
           <div className="brand">MoodAngels</div>
           <nav className="nav">
-            <Link to="/UDashboard">Dashboard</Link>
-            <Link to="/TherapistF">Find a Therapist</Link>
-            <Link to="/Profile">Profile</Link>
+            <Link to="/udashboard">Dashboard</Link>
+            <Link to="/therapistf">Find a Therapist</Link>
+            <Link to="/profile">Profile</Link>
             <Link to="/settings">Settings</Link>
           </nav>
         </aside>

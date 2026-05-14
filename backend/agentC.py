@@ -7,10 +7,9 @@ import os
 import re
 import traceback
 from dotenv import load_dotenv
-from openai import OpenAI, APIError
 
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Don't initialize client here - do it only when needed
 
 
 # =================== UTF-8 & STRUCTURE SANITIZERS ===================
@@ -39,6 +38,21 @@ def safe_json_output(obj):
         sys.stdout.buffer.write(json.dumps(obj, ensure_ascii=False).encode("utf-8", "replace"))
     except Exception:
         sys.stdout.write(json.dumps({"error": "json_dump_failed"}))
+
+def deterministic_comparison(agentR_result, agentD_result, score):
+    """Fallback: generate a comparison summary without OpenAI."""
+    if not agentR_result and not agentD_result:
+        return "Based on the assessment, professional evaluation is recommended to clarify findings."
+    
+    r_summary = agentR_result[:80] if agentR_result else "findings"
+    d_summary = agentD_result[:80] if agentD_result else "assessment"
+    
+    if score and float(score) > 70:
+        return f"Both Agent R ({r_summary}) and Agent D ({d_summary}) indicate significant concern. Professional mental health consultation is strongly recommended."
+    elif score and float(score) > 40:
+        return f"Agent R found {r_summary} while Agent D noted {d_summary}. These findings suggest monitoring and potential professional consultation would be helpful."
+    else:
+        return f"Agent R's assessment: {r_summary}. Agent D's perspective: {d_summary}. Continued self-awareness and routine check-ins are recommended."
 
 
 # =================== OPENAI RESPONSE PARSING ===================
@@ -122,7 +136,15 @@ Output only the final summary — no JSON, no code block, no markdown formatting
 
     messages = sanitize_obj(messages)
 
+    # Check if API key exists before attempting API call
+    if not os.getenv("OPENAI_API_KEY"):
+        fallback = deterministic_comparison(agentR_result, agentD_result, score)
+        safe_json_output({"result": fallback, "warning": "no_openai_api_key"})
+        return
+
     try:
+        from openai import OpenAI, APIError
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         # ========== OpenAI Call ==========
         resp = client.responses.create(
             model=os.getenv("LLM_MODEL", "gpt-4o-mini"),
@@ -148,12 +170,10 @@ Output only the final summary — no JSON, no code block, no markdown formatting
         result = sanitize_string(result).strip()
         safe_json_output({"result": result})
 
-    except APIError as e:
-        tb = traceback.format_exc()
-        safe_json_output({"error": "openai_api_error", "details": str(e), "traceback": tb})
     except Exception as e:
         tb = traceback.format_exc()
-        safe_json_output({"error": "unexpected_error", "details": str(e), "traceback": tb})
+        fallback = deterministic_comparison(agentR_result, agentD_result, score)
+        safe_json_output({"result": fallback, "warning": "openai_unavailable", "details": str(e)})
 
 
 if __name__ == "__main__":

@@ -6,10 +6,9 @@ import json
 import os
 import traceback
 from dotenv import load_dotenv
-from openai import OpenAI, APIError
 
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+# Don't initialize client here - do it only when needed
 
 def sanitize_string(s: str) -> str:
     if not isinstance(s, str):
@@ -40,6 +39,34 @@ def safe_print_json(obj):
         sys.stdout.buffer.write(json.dumps(obj, ensure_ascii=False).encode("utf-8", "replace"))
     except Exception:
         sys.stdout.write(json.dumps({"error": "print_failed", "preview": str(obj)}))
+
+def deterministic_judgment(score, level, condition):
+    """Fallback: generate a clinical judgment without OpenAI."""
+    try:
+        s = float(score) if score else 0
+    except Exception:
+        s = 0
+    
+    if s >= 75:
+        decision = "Likely"
+        confidence = 0.75
+        reasoning = f"The score of {s} and level '{level}' indicate significant symptomatology consistent with {condition}. Professional evaluation is recommended for confirmation and treatment planning."
+    elif s >= 50:
+        decision = "Possible"
+        confidence = 0.6
+        reasoning = f"The score of {s} suggests moderate concern. Further professional assessment is needed to determine if {condition} is present or if symptoms relate to other factors."
+    else:
+        decision = "Unlikely"
+        confidence = 0.5
+        reasoning = f"The score of {s} suggests lower likelihood of {condition}, though individual assessment by a professional may still be warranted."
+    
+    return {
+        "decision": decision,
+        "confidence": confidence,
+        "reasoning": reasoning,
+        "actions": ["Schedule consultation with mental health provider", "Monitor symptoms regularly"],
+        "final_call": f"Preliminary assessment: {decision} for {condition} based on available data. Professional evaluation recommended."
+    }
 
 def extract_text(resp):
     # Best-effort to get text from the Responses SDK object
@@ -148,7 +175,15 @@ Constraints:
         {"role": "user", "content": prompt}
     ]
 
+    # Check if API key exists before attempting API call
+    if not os.getenv("OPENAI_API_KEY"):
+        fallback = deterministic_judgment(data.get("score"), data.get("level", ""), data.get("condition", "the condition"))
+        safe_print_json(fallback)
+        return
+
     try:
+        from openai import OpenAI
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         resp = client.responses.create(
             model=os.getenv("LLM_MODEL", "gpt-4o-mini"),
             input=messages,
@@ -205,12 +240,15 @@ Constraints:
 
         safe_print_json(parsed)
 
-    except APIError as e:
-        tb = traceback.format_exc()
-        safe_print_json({"error": "openai_api_error", "details": str(e), "traceback": tb})
     except Exception as e:
         tb = traceback.format_exc()
-        safe_print_json({"error": "unexpected_error", "details": str(e), "traceback": tb})
+        score = data.get("score")
+        level = data.get("level", "")
+        condition = data.get("condition", "the condition")
+        fallback = deterministic_judgment(score, level, condition)
+        fallback["warning"] = "openai_unavailable"
+        fallback["details"] = str(e)
+        safe_print_json(fallback)
 
 if __name__ == "__main__":
     main()

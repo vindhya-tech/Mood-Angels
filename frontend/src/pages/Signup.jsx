@@ -71,6 +71,14 @@ export default function Signup() {
             "firstName",
             data.user.firstName || data.user.name || "User"
           );
+          localStorage.setItem(
+            "userName",
+            data.user.firstName || data.user.name || "User"
+          );
+          localStorage.setItem(
+            "fullName",
+            [data.user.firstName, data.user.lastName].filter(Boolean).join(" ")
+          );
           localStorage.setItem("email", data.user.email || "");
           localStorage.setItem("userId", data.user._id || "");
         }
@@ -112,6 +120,14 @@ const handleGoogleSignup = async (credentialResponse) => {
     localStorage.setItem(
       "firstName",
       res.data.user.firstName || res.data.user.name || "User"
+    );
+    localStorage.setItem(
+      "userName",
+      res.data.user.firstName || res.data.user.name || "User"
+    );
+    localStorage.setItem(
+      "fullName",
+      [res.data.user.firstName, res.data.user.lastName].filter(Boolean).join(" ")
     );
     localStorage.setItem("email", res.data.user.email || "");
     localStorage.setItem("userId", res.data.user._id || "");

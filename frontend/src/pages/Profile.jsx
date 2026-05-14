@@ -11,6 +11,14 @@ function Profile() {
 
   const userId = localStorage.getItem("userId");
 
+  if (!userId) {
+    return (
+      <div style={{ fontSize: 22, textAlign: "center", padding: 60 }}>
+        Please log in to view your profile.
+      </div>
+    );
+  }
+
   // ✅ Fetch User Data + Mood History
   useEffect(() => {
     if (!userId) return;

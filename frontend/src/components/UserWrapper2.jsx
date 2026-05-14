@@ -25,7 +25,12 @@ function UserWrapper2({children}) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const storedName = localStorage.getItem("userName"); // or "username" if you store it that way
+        const storedName =
+          localStorage.getItem("firstName") ||
+          localStorage.getItem("userName") ||
+          localStorage.getItem("fullName") ||
+          localStorage.getItem("email")?.split("@")[0] ||
+          "User";
         if (storedName) setUsername(storedName);
       } catch (err) {
         console.error(err);
@@ -107,9 +112,9 @@ function UserWrapper2({children}) {
         <aside className={`sidebar ${sidebarOpen ? "" : "closed"}`}>
           <div className="brand">MoodAngels</div>
           <nav className="nav">
-            <a href="/PDashboard">Dashboard</a>
-            <a href="Profile">Profile</a>
-            <a href="#">Settings</a>
+            <Link to="/pdashboard">Dashboard</Link>
+            <Link to="/profile">Profile</Link>
+            <Link to="/settings">Settings</Link>
           </nav>
         </aside>
 
@@ -133,7 +138,7 @@ function UserWrapper2({children}) {
               </div>
               {showUserMenu && (
                 <div className="userMenu">
-                  Hello<br />
+                  Hello, <b>{username}</b>!<br />
                   <button
                     onClick={() => {
                       localStorage.clear();

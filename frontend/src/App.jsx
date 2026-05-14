@@ -65,8 +65,11 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard2 />} />
           <Route path="/udashboard" element={<UDashboard />} />
+          <Route path="/UDashboard" element={<UDashboard />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/Profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/Settings" element={<Settings />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
 
@@ -74,6 +77,7 @@ function App() {
           <Route path="/plogin" element={<PLogin />} />
           <Route path="/psignup" element={<PSignup />} />
           <Route path="/pdashboard" element={<PDashboard />} />
+          <Route path="/PDashboard" element={<PDashboard />} />
 
           {/* 🆕 Invite System */}
           <Route path="/request-invite" element={<RequestInvite />} />
@@ -82,6 +86,7 @@ function App() {
           {/* ========================== 💬 UTILITIES / FEATURES ========================== */}
           <Route path="/chatbot" element={<ChatBot />} />
           <Route path="/therapistf" element={<FindTherapist />} />
+          <Route path="/TherapistF" element={<FindTherapist />} />
           <Route path="/support" element={<Support />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/articles" element={<Articles />} />

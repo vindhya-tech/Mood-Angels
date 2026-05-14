@@ -140,9 +140,9 @@ function UDashboard() {
         <aside className={`sidebar ${sidebarOpen ? "" : "closed"}`}>
           <div className="brand">MoodAngels</div>
           <nav className="nav">
-            <a href="/UDashboard">Dashboard</a>
-            <a href="/TherapistF">Find a Therapist?</a>
-            <a href="/Profile">Profile</a>
+            <a href="/udashboard">Dashboard</a>
+            <a href="/therapistf">Find a Therapist?</a>
+            <a href="/profile">Profile</a>
             <a href="/settings">Settings</a>
           </nav>
         </aside>
